@@ -19,17 +19,40 @@ jobs:
       - run:
           name: Installing angular cli
           command: 'npm install -g @angular/cli@6.0.8'
+        - notify_job_status
+
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
+        - notify_job_status 
+
       - run:
           name: Installing npm deps
           command: 'npm install'
+
       - save_cache: # special step to save the dependency cache
           key: dependency-cache-{{ checksum "package.json" }}
           paths: ./node_modules
-         #
+
+
+  notify_job_status:
+    description: Send webhook to slackbot about job status
+    steps:
+      - run:
+          name: On success
+          when: on_success
+          command: |
+                curl -XPOST https://postb.in/1575483865288-1727472532074 -d 'test'='sucess'
+
+      - run:
+          name: On fail
+          when: on_fail
+          command: |
+                curl -XPOST https://postb.in/1575483865288-1727472532074 -d 'test'='sucess'
+
+
 workflows:
   version: 2
   build_and_test:
     jobs:
       - test-cases
+        #      - notify_job_status
