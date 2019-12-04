@@ -27,9 +27,6 @@ jobs:
       - save_cache: # special step to save the dependency cache
           key: dependency-cache-{{ checksum "package.json" }}
           paths: ./node_modules
-      - run:
-          name: ng lint and building
-          command: 'mkdir -p /tmp/logs && ng lint && ng build --prod | tee /tmp/logs/build.log' 
          #
 workflows:
   version: 2
