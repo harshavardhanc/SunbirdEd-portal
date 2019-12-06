@@ -1,4 +1,20 @@
 version: 2.1
+
+commands:
+  notify_job_status:
+    steps:
+     - run:
+         name: On success
+         when: on_success
+         command: |
+             curl -XPOST https://postb.in/1575483865288-1727472532074 -d 'test'='sucess'
+
+     - run:
+         name: On fail
+         when: on_fail
+         command: |
+             curl -XPOST https://postb.in/1575483865288-1727472532074 -d 'test'='sucess'
+
 jobs:
   build:
     machine:
@@ -8,20 +24,6 @@ jobs:
       - run:
           name: run build file
           command: /bin/bash -x build.sh ${CIRCLE_SHA1} test
-
-  notify_job_status:
-   steps:
-    - run:
-        name: On success
-        when: on_success
-        command: |
-            curl -XPOST https://postb.in/1575483865288-1727472532074 -d 'test'='sucess'
-
-    - run:
-        name: On fail
-        when: on_fail
-        command: |
-            curl -XPOST https://postb.in/1575483865288-1727472532074 -d 'test'='sucess'
 
 
   test-cases:
