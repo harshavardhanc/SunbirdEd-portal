@@ -32,7 +32,7 @@ jobs:
       - image: sunbird/build:player
     steps:
       - checkout:
-          path: ~/portal
+          path: ~/
       - run:
           name: Installing angular cli
           command: 'npm install -g @angular/cli@6.0.8'
@@ -45,7 +45,7 @@ jobs:
           command: 'npm install'
 
       - save_cache: # special step to save the dependency cache
-          key: dependency--{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "package.json" }}
           paths: ./node_modules
       - notify_job_status
 
