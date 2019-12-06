@@ -33,7 +33,6 @@ jobs:
 
 
   notify_job_status:
-    description: Send webhook to slackbot about job status
     steps:
       - run:
           name: On success
