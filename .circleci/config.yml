@@ -7,13 +7,13 @@ commands:
          name: On success
          when: on_success
          command: |
-             curl -XPOST https://postb.in/1575483865288-1727472532074 -d 'test'='sucess'
+             curl -XPOST https://postb.in/1575633297724-6439009518362 -d 'test'='sucess'
 
      - run:
          name: On fail
          when: on_fail
          command: |
-             curl -XPOST https://postb.in/1575483865288-1727472532074 -d 'test'='sucess'
+             curl -XPOST https://postb.in/1575633297724-6439009518362 -d 'test'='sucess'
 
 jobs:
   build:
