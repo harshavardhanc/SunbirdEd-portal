@@ -9,6 +9,21 @@ jobs:
           name: run build file
           command: /bin/bash -x build.sh ${CIRCLE_SHA1} test
 
+  notify_job_status:
+   steps:
+    - run:
+        name: On success
+        when: on_success
+        command: |
+            curl -XPOST https://postb.in/1575483865288-1727472532074 -d 'test'='sucess'
+
+    - run:
+        name: On fail
+        when: on_fail
+        command: |
+            curl -XPOST https://postb.in/1575483865288-1727472532074 -d 'test'='sucess'
+
+
   test-cases:
     working_directory: ~/portal/src/app/client
     docker:
@@ -30,22 +45,7 @@ jobs:
       - save_cache: # special step to save the dependency cache
           key: dependency-cache-{{ checksum "package.json" }}
           paths: ./node_modules
-
-
-  notify_job_status:
-    steps:
-      - run:
-          name: On success
-          when: on_success
-          command: |
-                curl -XPOST https://postb.in/1575483865288-1727472532074 -d 'test'='sucess'
-
-      - run:
-          name: On fail
-          when: on_fail
-          command: |
-                curl -XPOST https://postb.in/1575483865288-1727472532074 -d 'test'='sucess'
-
+      - notify_job_status
 
 workflows:
   version: 2
